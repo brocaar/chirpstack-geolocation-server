@@ -34,10 +34,6 @@ nfpm:
   license: MIT
   formats:
     - deb
-  recommends:
-    - lora-gateway-bridge
-    - loraserver
-    - lora-app-server
   bindir: /usr/bin
   files:
     "packaging/files/lora-geo-server.rotate": "/etc/logrotate.d/lora-geo-server"
