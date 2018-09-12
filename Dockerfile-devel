@@ -1,0 +1,19 @@
+FROM golang:1.11-alpine
+
+ENV PROJECT_PATH=/go/src/github.com/brocaar/lora-geo-server
+ENV PATH=$PATH:$PROJECT_PATH/build
+
+RUN apk add --no-cache \
+    alpine-sdk \
+    ca-certificates \
+    tzdata \
+    make \
+    git \
+    bash \
+    protobuf
+
+RUN mkdir -p $PROJECT_PATH
+COPY . $PROJECT_PATH
+WORKDIR $PROJECT_PATH
+
+RUN make requirements

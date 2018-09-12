@@ -1,0 +1,40 @@
+language: go
+sudo: required
+dist: trusty
+
+go:
+  - "1.11.x"
+
+before_install:
+  - make requirements
+
+script:
+  - make test
+
+before_deploy:
+  - >
+    if ! [ "$BEFORE_DEPLOY_RUN" ]; then
+      export BEFORE_DEPLOY_RUN=1;
+
+      make dist;
+
+      mkdir -p dist/upload/tar;
+      mkdir -p dist/upload/deb;
+      mv dist/*.tar.gz dist/upload/tar;
+      mv dist/*.deb dist/upload/deb;
+    fi
+
+deploy:
+  - provider: s3
+    skip_cleanup: true
+    access_key_id: AKIAJRLX7TQLGT6NN7WQ
+    secret_access_key:
+      secure: fG+nXdXLGX8ZFs+gjpXZhkmwEySb4DeQtSjrTwqu14ekGMHxUUe97AJqqqUCZ5Ljj3cTg3eavq5wt1NoiA/ckocY2qCX7xgc+KIl4WAQDg+KsGlaQHmoTECr2x9/Eep5k2DbBqkRCSBjQw+WNpBHWfJZyZCO8zS2V51hqCO+szxIG0CYON8ZG3hau+3/de/yRznBUCkAkQ9AF0fhnS0A1XcT97wZl/ZTXtMLPpDeoQJqiZCm7s3xi5/ohWxmu8xLFVEKVPrE6kNvg512Ss5tjnOOTEnrvx95eChdC8SkbvGqC3H8+6s1dl10/Cn5kZGhDFgnfnvBzjVQS6VLg0huJ11M4+IGmucmHJOeIxFf7YPiS4ezudiYs5Q4V7DTUa557V49YoZnW3soTcZW4+XGCoiOPgZB0QktsxE86qphiMKB+q2KEX2ii53svXGSofYP5gXrkXCIbUuPC31ZzbTQin/eRBpf8to5zhWfz/TP01tqssV0Nru6PkRO4PnFfP5Fa1oadvw19yuIAVIfcJNz8hjxkqYBNxs+i6oc64rf08m3SA90wch6w0c6U8srBacUeIrx+0dKMc1vWvFrz1co4Bvjvx8/jBA1iOK5g7WjBJwBEx3lLxZKXcvWXkRt6BcMDUrPNbz731PqlmzJl62InbOiirvjnOetPc7QE6Ni8Wc=
+    bucket: builds.loraserver.io
+    local-dir: dist/upload
+    upload-dir: lora-geo-server
+    acl: private
+    region: eu-west-1
+    on:
+      tags: true
+      repo: brocaar/lora-geo-server

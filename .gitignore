@@ -1,0 +1,22 @@
+# hidden files
+.*
+
+# configuration
+*.toml
+
+# csv test files
+*.csv
+
+# dependencies
+/vendor
+
+# certs
+/certs
+
+# builds
+/dist
+/build
+/docs/public
+
+# test files
+/test

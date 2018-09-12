@@ -1,0 +1,48 @@
+git:
+  short_hash: true
+
+project_name: lora-geo-server
+
+builds:
+  - main: cmd/lora-geo-server/main.go
+    binary: lora-geo-server
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - 386
+      - arm
+      - arm64
+    goarm:
+      - 5
+      - 6
+      - 7
+    ignore:
+      - goos: darwin
+        goarch: 386
+
+release:
+  disable: true
+
+nfpm:
+  vendor: LoRa Server project
+  homepage: https://www.loraserver.io/
+  maintainer: Orne Brocaar <info@brocaar.com>
+  description: Geolocation Server for the LoRa Server project
+  license: MIT
+  formats:
+    - deb
+  recommends:
+    - lora-gateway-bridge
+    - loraserver
+    - lora-app-server
+  bindir: /usr/bin
+  files:
+    "packaging/files/lora-geo-server.rotate": "/etc/logrotate.d/lora-geo-server"
+    "packaging/files/lora-geo-server.init": "/usr/lib/lora-geo-server/scripts/lora-geo-server.init"
+    "packaging/files/lora-geo-server.service": "/usr/lib/lora-geo-server/scripts/lora-geo-server.service"
+  scripts:
+    postinstall: "packaging/scripts/post-install.sh"
+    postremove: "packaging/scripts/post-remove.sh"

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package test;
+
+import "github.com/brocaar/loraserver/api/geo/geo.proto";
+
+
+message ResolveTDOATestSuite {
+    repeated TDOATest tests = 1;
+}
+
+message TDOATest {
+    geo.ResolveTDOARequest request = 1;
+    geo.ResolveResult expected_result = 2;
+}
