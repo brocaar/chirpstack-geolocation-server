@@ -27,7 +27,7 @@ toc: false
 
 | File name                                                                                                                                                    | OS      | Arch  |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------| ------- | ----- |
-| [lora-geo-server_{{< version >}}_linux_386.deb](https://artifacts.loraserver.io/downloads/lora-geo-server/lora-geo-server_{{< version >}}_386.deb)           | Linux   | 386   |
+| [lora-geo-server_{{< version >}}_linux_386.deb](https://artifacts.loraserver.io/downloads/lora-geo-server/lora-geo-server_{{< version >}}_linux_386.deb)     | Linux   | 386   |
 | [lora-geo-server_{{< version >}}_linux_amd64.deb](https://artifacts.loraserver.io/downloads/lora-geo-server/lora-geo-server_{{< version >}}_linux_amd64.deb) | Linux   | amd64 |
 | [lora-geo-server_{{< version >}}_linux_armv5.deb](https://artifacts.loraserver.io/downloads/lora-geo-server/lora-geo-server_{{< version >}}_linux_armv5.deb) | Linux   | arm   |
 | [lora-geo-server_{{< version >}}_linux_armv6.deb](https://artifacts.loraserver.io/downloads/lora-geo-server/lora-geo-server_{{< version >}}_linux_armv6.deb) | Linux   | arm   |
