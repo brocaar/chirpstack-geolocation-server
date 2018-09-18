@@ -4,6 +4,7 @@ menu:
     main:
         parent: backends
         weight: 3
+description: Collos geolocation service by Semtech.
 ---
 
 # Semtech Collos

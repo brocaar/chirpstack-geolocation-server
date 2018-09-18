@@ -4,6 +4,7 @@ menu:
     main:
         parent: install
         weight: 1
+description: Instructions how to setup the LoRa Geo Server requirements.
 ---
 
 # Requirement

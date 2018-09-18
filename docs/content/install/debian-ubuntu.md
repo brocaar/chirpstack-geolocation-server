@@ -4,6 +4,7 @@ menu:
     main:
         parent: install
         weight: 2
+description: Instructions how to install LoRa Geo Server on a Debian or Ubuntu based Linux installation.
 ---
 
 # Debian / Ubuntu installation
