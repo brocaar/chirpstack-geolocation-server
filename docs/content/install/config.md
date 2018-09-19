@@ -13,7 +13,7 @@ description: Instructions and examples how to configure the LoRa Geo Server serv
 To list all configuration options, start `lora-geo-server` with the `--help`
 flag. This will display:
 
-```text
+{{<highlight text>}}
 LoRa Geo Server provides geolocation services for LoRa Server
         > documentation & support: https://www.loraserver.io/lora-geo-server/
         > source & copyright information: https://github.com/brocaar/lora-geo-server/
@@ -34,7 +34,7 @@ Flags:
       --log-level int   debug=5, info=4, error=2, fatal=1, panic=0 (default 4)
 
 Use "lora-geo-server [command] --help" for more information about a command.
-```
+{{< /highlight >}}
 
 ## Configuration file
 
@@ -49,22 +49,22 @@ To load configuration from a different location, use the `--config` flag.
 
 To generate a new configuration file `lora-geo-server.toml`, execute the following command:
 
-```bash
+{{<highlight bash>}}
 lora-geo-server configfile > lora-geo-server.toml
-```
+{{< /highlight >}}
 
 Note that this configuration file will be pre-filled with the current configuration
 (either loaded from the paths mentioned above, or by using the `--config` flag).
 This makes it possible when new fields get added to upgrade your configuration file
 while preserving your old configuration. Example:
 
-```bash
+{{<highlight bash>}}
 lora-geo-server configfile --config lora-geo-server-old.toml > lora-geo-server-new.toml
-```
+{{< /highlight >}}
 
 Example configuration file:
 
-```toml
+{{<highlight toml>}}
 [general]
 # Log level
 #
@@ -108,7 +108,7 @@ log_level=4
   #
   # This defines the request timeout when making calls to the Collos API.
   request_timeout="1s"
-```
+{{< /highlight >}}
 
 ## Securing the geolocation API
 
