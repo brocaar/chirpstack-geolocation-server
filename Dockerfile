@@ -11,7 +11,7 @@ RUN mkdir -p $PROJECT_PATH
 COPY . $PROJECT_PATH
 WORKDIR $PROJECT_PATH
 
-RUN make requirements
+RUN make dev-requirements requirements
 RUN make
 
 FROM alpine:latest AS production
