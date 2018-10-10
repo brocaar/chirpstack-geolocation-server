@@ -92,7 +92,7 @@ func gRPCLoggingServerOptions() []grpc.ServerOption {
 	}
 }
 
-func mustGetTransportCredentials(tlsCert, tlsKey, caCert string, verifyClientCert bool) credentials.TransportCredentials {
+func mustGetTransportCredentials(caCert, tlsCert, tlsKey string, verifyClientCert bool) credentials.TransportCredentials {
 	cert, err := tls.LoadX509KeyPair(tlsCert, tlsKey)
 	if err != nil {
 		log.WithFields(log.Fields{
