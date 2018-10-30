@@ -25,8 +25,11 @@ clean:
 	rm -rf docs/public
 
 dist:
-	@echo "Building distribution binaries"
 	goreleaser
+	mkdir -p dist/upload/tar
+	mkdir -p dist/upload/deb
+	mv dist/*.tar.gz dist/upload/tar
+	mv dist/*.deb dist/upload/deb
 
 snapshot:
 	@echo "Building snapshot binaries"
