@@ -2,7 +2,7 @@
 .*
 
 # configuration
-*.toml
+/*.toml
 
 # csv test files
 *.csv
