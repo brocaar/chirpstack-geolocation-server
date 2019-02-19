@@ -32,9 +32,8 @@ pre-compiled packages available):
 
 #### Go
 
-Make sure you have [Go](https://golang.org/) installed (1.10+) and that the LoRa
-Geo Server repository has been cloned into 
-`$GOPATH/src/github.com/brocaar/lora-geo-server`.
+Make sure you have [Go](https://golang.org/) installed (1.11+). As LoRa Geo Server
+uses Go modules, the repository must be cloned outside the `$GOPATH`.
 
 #### Go protocol buffer support
 
@@ -48,9 +47,6 @@ A few example commands that you can run:
 {{<highlight bash>}}
 # install development requirements
 make dev-requirements
-
-# install requirements
-make requirements
 
 # run the tests
 make test

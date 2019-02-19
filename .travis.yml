@@ -4,7 +4,6 @@ services:
   - docker
 
 script:
-  - docker-compose run --rm geoserver make requirements
   - docker-compose run --rm geoserver make test
 
 before_deploy:

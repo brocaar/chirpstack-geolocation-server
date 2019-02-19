@@ -37,14 +37,10 @@ snapshot:
 
 dev-requirements:
 	@echo "Installing requirements"
-	go get -u golang.org/x/tools/cmd/stringer
-	go get -u github.com/golang/protobuf/protoc-gen-go
-	go get -u github.com/golang/dep/cmd/dep
-	go get -u github.com/goreleaser/goreleaser
-	go get -u github.com/goreleaser/nfpm
-
-requirements:
-	dep ensure -v
+	go install golang.org/x/tools/cmd/stringer
+	go install github.com/golang/protobuf/protoc-gen-go
+	go install github.com/goreleaser/goreleaser
+	go install github.com/goreleaser/nfpm
 
 docker-test:
 	@echo "Running tests inside docker container"
