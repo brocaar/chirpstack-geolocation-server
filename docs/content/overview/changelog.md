@@ -10,6 +10,15 @@ description: Lists the changes per LoRa Geo Server release, including steps how 
 
 # Changelog
 
+## v3.0.0
+
+This release bumps the major version to v3, to stay in sync with the other
+LoRa Server components.
+
+### Improvements
+
+* Update dependencies to their latest versions.
+
 ## v2.0.1
 
 ### Bugfixes
