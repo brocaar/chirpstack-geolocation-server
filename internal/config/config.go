@@ -20,7 +20,10 @@ type Config struct {
 		} `mapstructure:"api"`
 
 		Backend struct {
-			Type   string `mapstructure:"type"`
+			Type string `mapstructure:"type"`
+
+			RequestLogDir string `mapstructure:"request_log_dir"`
+
 			Collos struct {
 				SubscriptionKey string        `mapstructure:"subscription_key"`
 				RequestTimeout  time.Duration `mapstructure:"request_timeout"`

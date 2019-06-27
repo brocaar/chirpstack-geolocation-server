@@ -42,6 +42,12 @@ tls_key="{{ .GeoServer.API.TLSKey }}"
   # The backend type to use.
   type="{{ .GeoServer.Backend.Type }}"
 
+  # Request log directory.
+  #
+  # Logging requests can be used to "replay" geolocation requests and to compare
+  # different geolocation backends. When left blank, logging will be disabled.
+  request_log_dir="{{ .GeoServer.Backend.RequestLogDir }}"
+
 	# Collos backend.
     [geo_server.backend.collos]
     # Collos subscription key.

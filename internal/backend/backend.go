@@ -16,6 +16,7 @@ import (
 	"google.golang.org/grpc/credentials"
 
 	"github.com/brocaar/lora-geo-server/internal/backend/collos"
+	"github.com/brocaar/lora-geo-server/internal/backend/logger"
 	"github.com/brocaar/lora-geo-server/internal/config"
 	"github.com/brocaar/loraserver/api/geo"
 )
@@ -33,6 +34,11 @@ func Setup(c config.Config) error {
 
 	if err != nil {
 		return errors.Wrap(err, "setup backend error")
+	}
+
+	b, err = logger.NewBackend(b, c)
+	if err != nil {
+		return errors.Wrap(err, "setup logging backend error")
 	}
 
 	log.WithFields(log.Fields{
