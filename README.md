@@ -1,6 +1,6 @@
 # LoRa Geo Server
 
-[![Build Status](https://travis-ci.org/brocaar/lora-geo-server.svg?branch=master)](https://travis-ci.org/brocaar/lora-geo-server)
+[![CircleCI](https://circleci.com/gh/brocaar/lora-geo-server.svg?style=svg)](https://circleci.com/gh/brocaar/lora-geo-server)
 
 LoRa Geo Server provides a geolocation server for geolocation of LoRaWAN
 devices. It is part of the [LoRa Server](http://www.loraserver.io) project.
