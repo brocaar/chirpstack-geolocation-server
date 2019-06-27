@@ -1,9 +1,8 @@
 module github.com/brocaar/lora-geo-server
 
 require (
-	github.com/brocaar/loraserver v0.0.0-20190520085820-96d99ce13e4e
+	github.com/brocaar/loraserver v0.0.0-20190626140856-b5339b95a2d3
 	github.com/brocaar/lorawan v0.0.0-20190402092148-5bca41b178e9
-	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.3.1
 	github.com/goreleaser/goreleaser v0.106.0
 	github.com/goreleaser/nfpm v0.11.0

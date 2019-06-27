@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/gogo/protobuf/jsonpb"
-	"github.com/gogo/protobuf/proto"
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
@@ -63,7 +63,7 @@ func (b *Backend) logRequest(prefix string, msg proto.Message) error {
 		return errors.Wrap(err, "marshal json error")
 	}
 
-	filePath := filepath.Join(b.logDir, prefix, time.Now().UTC().Format(time.RFC3339)+".json")
+	filePath := filepath.Join(b.logDir, prefix, time.Now().UTC().Format(time.RFC3339)+".request.json")
 	if err := ioutil.WriteFile(filePath, bb.Bytes(), 0644); err != nil {
 		return errors.Wrap(err, "write file error")
 	}

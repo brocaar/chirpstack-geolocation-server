@@ -1,75 +1,132 @@
-//go:generate protoc -I=. -I=../../vendor -I=$GOPATH/src --go_out=plugins=grpc:. models.proto
-
 package test
 
 import (
 	"context"
 	"encoding/csv"
-	"log"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
+	"time"
+
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/brocaar/lora-geo-server/internal/backend/collos"
 	"github.com/brocaar/lora-geo-server/internal/config"
-	"github.com/pkg/errors"
+	geo "github.com/brocaar/loraserver/api/geo"
 )
 
 // ResolveTDOA runs the given Resolve TDOA test-suite.
-func ResolveTDOA(ts ResolveTDOATestSuite) error {
+func ResolveTDOA(logDir string) error {
 	backend, err := collos.NewBackend(config.C)
 	if err != nil {
 		return errors.Wrap(err, "new backend error")
 	}
 
-	w := csv.NewWriter(os.Stdout)
+	reportFilePath := filepath.Join(logDir, config.C.GeoServer.Backend.Type+"-report-"+time.Now().UTC().Format(time.RFC3339)+".csv")
+	f, err := os.Create(reportFilePath)
+	if err != nil {
+		return errors.Wrap(err, "open report file error")
+	}
+	defer f.Close()
+
+	w := csv.NewWriter(f)
+	defer w.Flush()
+
 	if err := w.Write([]string{
 		"id",
-		"exp_lat",
-		"exp_long",
-		"exp_alt",
-		"collos_out_lat",
-		"collos_out_long",
-		"collos_out_alt",
-		"collos_diff_meters",
+		"latitude",
+		"longitude",
+		"altitude",
+		"accuracy",
 	}); err != nil {
 		log.Fatal(err)
 	}
 
-	for i, t := range ts.Tests {
-		res, err := backend.ResolveTDOA(context.Background(), t.Request)
-		if err != nil {
-			log.Printf("%d - %s", i, err)
+	files, err := ioutil.ReadDir(logDir)
+	if err != nil {
+		return errors.Wrap(err, "read directory error")
+	}
+
+	for _, f := range files {
+		if !strings.HasSuffix(f.Name(), ".request.json") {
 			continue
+		}
+
+		req, err := loadResolveTDOARequest(logDir, f.Name())
+		if err != nil {
+			return errors.Wrap(err, "load ResolveTDOARequest error")
+		}
+
+		res, err := backend.ResolveTDOA(context.Background(), &req)
+		if err != nil {
+			log.WithField("file", f.Name()).WithError(err).Error("ResolveTDOA error")
+			continue
+		}
+
+		if err := writeResolveTDOAResponse(logDir, strings.TrimRight(f.Name(), ".request.json")+"."+config.C.GeoServer.Backend.Type+".response.json", res); err != nil {
+			return errors.Wrap(err, "write ResolveTDOAResponse error")
 		}
 
 		if res.Result == nil {
-			log.Printf("%d - nil result", i)
-			continue
+			log.WithField("file", f.Name()).Warning("nil result")
 		}
 
 		if res.Result.Location == nil {
-			log.Printf("%d - nil location", i)
-			continue
+			log.WithField("file", f.Name()).Warning("nil location")
 		}
 
-		p1 := NewPoint(t.ExpectedResult.Location.Latitude, t.ExpectedResult.Location.Longitude, 0)
-		p2 := NewPoint(res.Result.Location.Latitude, res.Result.Location.Longitude, 0)
-
 		if err := w.Write([]string{
-			strconv.FormatInt(int64(i), 10),
-			strconv.FormatFloat(t.ExpectedResult.Location.Latitude, 'f', 6, 64),
-			strconv.FormatFloat(t.ExpectedResult.Location.Longitude, 'f', 6, 64),
-			strconv.FormatFloat(t.ExpectedResult.Location.Altitude, 'f', 6, 64),
+			f.Name(),
 			strconv.FormatFloat(res.Result.Location.Latitude, 'f', 6, 64),
 			strconv.FormatFloat(res.Result.Location.Longitude, 'f', 6, 64),
 			strconv.FormatFloat(res.Result.Location.Altitude, 'f', 6, 64),
-			strconv.FormatFloat(p1.Distance(p2), 'f', 6, 64),
+			strconv.FormatInt(int64(res.Result.Location.Accuracy), 10),
 		}); err != nil {
-			log.Fatal(err)
+			return errors.Wrap(err, "csv write error")
 		}
 	}
 
-	w.Flush()
+	return nil
+}
+
+func loadResolveTDOARequest(logDir, fn string) (geo.ResolveTDOARequest, error) {
+	var out geo.ResolveTDOARequest
+
+	f, err := os.Open(filepath.Join(logDir, fn))
+	if err != nil {
+		return out, errors.Wrap(err, "open file error")
+	}
+	defer f.Close()
+
+	m := jsonpb.Unmarshaler{
+		AllowUnknownFields: true,
+	}
+
+	if err := m.Unmarshal(f, &out); err != nil {
+		return out, errors.Wrap(err, "unmarshal error")
+	}
+
+	return out, nil
+}
+
+func writeResolveTDOAResponse(logDir, fn string, resp *geo.ResolveTDOAResponse) error {
+	m := jsonpb.Marshaler{
+		EmitDefaults: true,
+	}
+
+	f, err := os.Create(filepath.Join(logDir, fn))
+	if err != nil {
+		return errors.Wrap(err, "open file error")
+	}
+	defer f.Close()
+
+	if err := m.Marshal(f, resp); err != nil {
+		return errors.Wrap(err, "marshal error")
+	}
 
 	return nil
 }
