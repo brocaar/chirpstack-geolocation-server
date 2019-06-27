@@ -42,8 +42,9 @@ func Setup(c config.Config) error {
 		"tls_cert": c.GeoServer.API.TLSCert,
 		"tls_key":  c.GeoServer.API.TLSKey,
 	}).Info("starting api server")
-	if err != nil {
-		serveBackend(b)
+
+	if err := serveBackend(b); err != nil {
+		return errors.Wrap(err, "serve backend error")
 	}
 
 	return nil
