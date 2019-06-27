@@ -1,35 +1,44 @@
 package collos
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
 
 	"github.com/golang/protobuf/ptypes"
+	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 
+	"github.com/brocaar/lora-geo-server/internal/config"
 	"github.com/brocaar/loraserver/api/common"
 	"github.com/brocaar/loraserver/api/geo"
 	"github.com/brocaar/loraserver/api/gw"
 	"github.com/brocaar/lorawan"
 )
 
-// API exposes the Collos geolocation- methods.
-type API struct {
-	config Config
+// Backend implements the Collos geolocation backend.
+type Backend struct {
+	subscriptionKey string
+	requestTimeout  time.Duration
 }
 
-// NewAPI creates a new API.
-func NewAPI(c Config) geo.GeolocationServerServiceServer {
-	return &API{
-		config: c,
-	}
+// NewBackend creates a new Collos backend.
+func NewBackend(c config.Config) (geo.GeolocationServerServiceServer, error) {
+	return &Backend{
+		subscriptionKey: c.GeoServer.Backend.Collos.SubscriptionKey,
+		requestTimeout:  c.GeoServer.Backend.Collos.RequestTimeout,
+	}, nil
 }
 
 // ResolveTDOA resolves the location based on TDOA.
-func (a *API) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) (*geo.ResolveTDOAResponse, error) {
+func (b *Backend) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) (*geo.ResolveTDOAResponse, error) {
 	if req.FrameRxInfo == nil {
 		return nil, grpc.Errorf(codes.InvalidArgument, "frame_rx_info must not be nil")
 	}
@@ -118,7 +127,7 @@ func (a *API) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) (*ge
 		return nil, grpc.Errorf(codes.InvalidArgument, "not enough meta-data for geolocation")
 	}
 
-	tdoaResp, err := resolveTDOA(ctx, a.config, todaReq)
+	tdoaResp, err := b.resolveTDOA(ctx, todaReq)
 	if err != nil {
 		return nil, grpc.Errorf(codes.Unknown, "geolocation error: %s", err)
 	}
@@ -148,4 +157,43 @@ func (a *API) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) (*ge
 			},
 		},
 	}, nil
+}
+
+func (b *Backend) resolveTDOA(ctx context.Context, tdoaReq tdoaRequest) (response, error) {
+	var resolveResp response
+
+	bb, err := json.Marshal(tdoaReq)
+	if err != nil {
+		return resolveResp, errors.Wrap(err, "marshal request error")
+	}
+
+	req, err := http.NewRequest("POST", tdoaEndpoint, bytes.NewReader(bb))
+	if err != nil {
+		return resolveResp, errors.Wrap(err, "new request error")
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Ocp-Apim-Subscription-Key", b.subscriptionKey)
+
+	reqCTX, cancel := context.WithTimeout(ctx, b.requestTimeout)
+	defer cancel()
+
+	req = req.WithContext(reqCTX)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return resolveResp, errors.Wrap(err, "http request error")
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		bb, _ := ioutil.ReadAll(resp.Body)
+		return resolveResp, fmt.Errorf("expected 200, got: %d (%s)", resp.StatusCode, string(bb))
+	}
+
+	if err = json.NewDecoder(resp.Body).Decode(&resolveResp); err != nil {
+		return resolveResp, errors.Wrap(err, "unmarshal response error")
+	}
+
+	return resolveResp, nil
 }

@@ -18,41 +18,42 @@ log_level={{ .General.LogLevel }}
 
 # Geolocation-server configuration.
 [geo_server]
-  # Geolocation API.
-  #
-  # This is the geolocation API that can be used by LoRa Server.
-  [geo_server.api]
-  # ip:port to bind the api server
-  bind="{{ .GeoServer.API.Bind }}"
+# Geolocation API.
+#
+# This is the geolocation API that can be used by LoRa Server.
+[geo_server.api]
+# ip:port to bind the api server
+bind="{{ .GeoServer.API.Bind }}"
 
-  # CA certificate used by the api server (optional)
-  ca_cert="{{ .GeoServer.API.CACert }}"
+# CA certificate used by the api server (optional)
+ca_cert="{{ .GeoServer.API.CACert }}"
 
-  # TLS certificate used by the api server (optional)
-  tls_cert="{{ .GeoServer.API.TLSCert }}"
+# TLS certificate used by the api server (optional)
+tls_cert="{{ .GeoServer.API.TLSCert }}"
 
-  # TLS key used by the api server (optional)
-  tls_key="{{ .GeoServer.API.TLSKey }}"
+# TLS key used by the api server (optional)
+tls_key="{{ .GeoServer.API.TLSKey }}"
 
 
   # Geolocation backend configuration.
   [geo_server.backend]
-  # Name.
+  # Type.
   #
-  # The name of the geolocation backend to use.
-  name="{{ .GeoServer.Backend.Name }}"
+  # The backend type to use.
+  type="{{ .GeoServer.Backend.Type }}"
 
-  [geo_server.backend.collos]
-  # Collos subscription key.
-  #
-  # This key can be retrieved after creating a Collos account at:
-  # http://preview.collos.org/
-  subscription_key="{{ .GeoServer.Backend.Collos.SubscriptionKey }}"
+	# Collos backend.
+    [geo_server.backend.collos]
+    # Collos subscription key.
+    #
+    # This key can be retrieved after creating a Collos account at:
+    # http://preview.collos.org/
+    subscription_key="{{ .GeoServer.Backend.Collos.SubscriptionKey }}"
 
-  # Request timeout.
-  #
-  # This defines the request timeout when making calls to the Collos API.
-  request_timeout="{{ .GeoServer.Backend.Collos.RequestTimeout }}"
+    # Request timeout.
+    #
+    # This defines the request timeout when making calls to the Collos API.
+    request_timeout="{{ .GeoServer.Backend.Collos.RequestTimeout }}"
 `
 
 var configfileCmd = &cobra.Command{

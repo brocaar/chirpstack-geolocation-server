@@ -1,8 +1,6 @@
 package config
 
-import (
-	"github.com/brocaar/lora-geo-server/internal/backends/collos"
-)
+import "time"
 
 // Version defines the LoRa Geo Server version.
 var Version string
@@ -22,8 +20,11 @@ type Config struct {
 		} `mapstructure:"api"`
 
 		Backend struct {
-			Name   string        `mapstructure:"name"`
-			Collos collos.Config `mapstructure:"collos"`
+			Type   string `mapstructure:"type"`
+			Collos struct {
+				SubscriptionKey string        `mapstructure:"subscription_key"`
+				RequestTimeout  time.Duration `mapstructure:"request_timeout"`
+			} `mapstructure:"collos"`
 		} `mapstructure:"backend"`
 	} `mapstructure:"geo_server"`
 }

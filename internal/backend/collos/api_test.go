@@ -36,10 +36,8 @@ func (ts *CollosTestSuite) SetupSuite() {
 
 	ts.apiServer = httptest.NewServer(http.HandlerFunc(ts.apiHandler))
 
-	ts.client = &API{
-		config: Config{
-			RequestTimeout: time.Second,
-		},
+	ts.client = &Backend{
+		requestTimeout: time.Second,
 	}
 
 	tdoaEndpoint = ts.apiServer.URL

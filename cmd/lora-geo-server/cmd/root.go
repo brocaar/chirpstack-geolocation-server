@@ -35,7 +35,7 @@ func init() {
 	viper.BindPFlag("general.log_level", rootCmd.PersistentFlags().Lookup("log-level"))
 
 	viper.SetDefault("geo_server.api.bind", "0.0.0.0:8005")
-	viper.SetDefault("geo_server.backend.name", "collos")
+	viper.SetDefault("geo_server.backend.type", "collos")
 	viper.SetDefault("geo_server.backend.collos.request_timeout", time.Second)
 
 	rootCmd.AddCommand(versionCmd)

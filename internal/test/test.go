@@ -9,13 +9,17 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/brocaar/lora-geo-server/internal/backends/collos"
+	"github.com/brocaar/lora-geo-server/internal/backend/collos"
 	"github.com/brocaar/lora-geo-server/internal/config"
+	"github.com/pkg/errors"
 )
 
 // ResolveTDOA runs the given Resolve TDOA test-suite.
 func ResolveTDOA(ts ResolveTDOATestSuite) error {
-	backend := collos.NewAPI(config.C.GeoServer.Backend.Collos)
+	backend, err := collos.NewBackend(config.C)
+	if err != nil {
+		return errors.Wrap(err, "new backend error")
+	}
 
 	w := csv.NewWriter(os.Stdout)
 	if err := w.Write([]string{
@@ -63,7 +67,6 @@ func ResolveTDOA(ts ResolveTDOATestSuite) error {
 		}); err != nil {
 			log.Fatal(err)
 		}
-
 	}
 
 	w.Flush()
