@@ -44,6 +44,16 @@ func (b *Backend) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) 
 	return b.backend.ResolveTDOA(ctx, req)
 }
 
+// ResolveMultiFrameTDOA resolves the location using TDOA, based on
+// multiple frames.
+func (b *Backend) ResolveMultiFrameTDOA(ctx context.Context, req *geo.ResolveMultiFrameTDOARequest) (*geo.ResolveMultiFrameTDOAResponse, error) {
+	if err := b.logRequest("ResolveMultiFrameTDOA", req); err != nil {
+		log.WithError(err).Error("backend/logger: log request error")
+	}
+
+	return b.backend.ResolveMultiFrameTDOA(ctx, req)
+}
+
 func (b *Backend) logRequest(prefix string, msg proto.Message) error {
 	if b.logDir == "" {
 		return nil
