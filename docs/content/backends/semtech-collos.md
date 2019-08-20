@@ -16,4 +16,18 @@ for more information and for signing up.
 
 ## Implementation
 
-LoRa Geo Server integrates with the Collos v2 TDoA localization algorithm.
+LoRa Geo Server integrates with the Collos v2 TDoA localization algorithm. Both
+single-frame and multi-frame TDOA are implemented.
+
+## Metrics
+
+For more information on metrics, see [Prometheus metrics]({{<ref "metrics/prometheus.md">}}).
+The Collos backend exposes the following metrics:
+
+
+### backend_collos_api_duration_seconds
+
+A [Histogram](https://prometheus.io/docs/concepts/metric_types/#histogram) type
+metrics tracking the total number of API calls to the Collos API endpoint and
+their durations (using buckets).
+

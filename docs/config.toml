@@ -26,6 +26,13 @@ pygmentsUseClasses = true
     weight = 3
 
 [[menu.main]]
+    pre = "<i class='fas fa-chart-line'></i>"
+    name = "Metrics"
+    identifier = "metrics"
+    url = "/metrics/"
+    weight = 4
+
+[[menu.main]]
     pre = "<i class='fab fa-github'></i>"
     name = "Community & support"
     identifier = "community"
