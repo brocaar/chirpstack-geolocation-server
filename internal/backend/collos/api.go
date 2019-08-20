@@ -120,11 +120,19 @@ func (b *Backend) ResolveMultiFrameTDOA(ctx context.Context, req *geo.ResolveMul
 }
 
 func (b *Backend) resolveTDOA(ctx context.Context, tdoaReq tdoaRequest) (response, error) {
-	return b.collosAPIRequest(ctx, tdoaEndpoint, tdoaReq)
+	d := collosAPIDuration("v2_tdoa")
+	start := time.Now()
+	resp, err := b.collosAPIRequest(ctx, tdoaEndpoint, tdoaReq)
+	d.Observe(float64(time.Since(start)) / float64(time.Second))
+	return resp, err
 }
 
 func (b *Backend) resolveTDOAMultiFrame(ctx context.Context, tdoaMultiFrameReq tdoaMultiFrameRequest) (response, error) {
-	return b.collosAPIRequest(ctx, tdoaMultiFrameEndpoint, tdoaMultiFrameReq)
+	d := collosAPIDuration("v2_tdoa_multiframe")
+	start := time.Now()
+	resp, err := b.collosAPIRequest(ctx, tdoaMultiFrameEndpoint, tdoaMultiFrameReq)
+	d.Observe(float64(time.Since(start)) / float64(time.Second))
+	return resp, err
 }
 
 func (b *Backend) collosAPIRequest(ctx context.Context, endpoint string, v interface{}) (response, error) {
