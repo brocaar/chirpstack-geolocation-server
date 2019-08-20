@@ -11,12 +11,14 @@ import (
 
 	"github.com/brocaar/lora-geo-server/internal/backend"
 	"github.com/brocaar/lora-geo-server/internal/config"
+	"github.com/brocaar/lora-geo-server/internal/metrics"
 )
 
 func run(cmd *cobra.Command, args []string) error {
 	tasks := []func() error{
 		setLogLevel,
 		printStartMessage,
+		setupMetrics,
 		setupBackend,
 	}
 
@@ -49,6 +51,13 @@ func printStartMessage() error {
 func setupBackend() error {
 	if err := backend.Setup(config.C); err != nil {
 		return errors.Wrap(err, "setup backend error")
+	}
+	return nil
+}
+
+func setupMetrics() error {
+	if err := metrics.Setup(config.C); err != nil {
+		return errors.Wrap(err, "setup metrics error")
 	}
 	return nil
 }

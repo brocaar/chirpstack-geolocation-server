@@ -3,11 +3,13 @@ module github.com/brocaar/lora-geo-server
 require (
 	github.com/brocaar/loraserver v0.0.0-20190813132339-df9c6685a8f6
 	github.com/brocaar/lorawan v0.0.0-20190709091804-c3a80883a8fa
-	github.com/golang/protobuf v1.3.1
+	github.com/golang/protobuf v1.3.2
 	github.com/goreleaser/goreleaser v0.106.0
 	github.com/goreleaser/nfpm v0.11.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
+	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/pkg/errors v0.8.1
+	github.com/prometheus/client_golang v1.1.0
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/cobra v0.0.4
 	github.com/spf13/viper v1.3.2

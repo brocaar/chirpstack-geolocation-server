@@ -92,22 +92,45 @@ log_level=4
 
   # Geolocation backend configuration.
   [geo_server.backend]
-  # Name.
+  # Type.
   #
-  # The name of the geolocation backend to use.
-  name="collos"
+  # The backend type to use.
+  type="collos"
 
-  [geo_server.backend.collos]
-  # Collos subscription key.
+  # Request log directory.
   #
-  # This key can be retrieved after creating a Collos account at:
-  # http://preview.collos.org/
-  subscription_key=""
+  # Logging requests can be used to "replay" geolocation requests and to compare
+  # different geolocation backends. When left blank, logging will be disabled.
+  request_log_dir=""
 
-  # Request timeout.
-  #
-  # This defines the request timeout when making calls to the Collos API.
-  request_timeout="1s"
+    # Collos backend.
+    [geo_server.backend.collos]
+    # Collos subscription key.
+    #
+    # This key can be retrieved after creating a Collos account at:
+    # http://preview.collos.org/
+    subscription_key=""
+
+    # Request timeout.
+    #
+    # This defines the request timeout when making calls to the Collos API.
+    request_timeout="1s"
+
+
+# Prometheus metrics settings.
+[metrics.prometheus]
+# Enable Prometheus metrics endpoint.
+endpoint_enabled=false
+
+# The ip:port to bind the Prometheus metrics server to for serving the
+# metrics endpoint.
+bind=""
+
+# API timing histogram.
+#
+# By setting this to true, the API request timing histogram will be enabled.
+# See also: https://github.com/grpc-ecosystem/go-grpc-prometheus#histograms
+api_timing_histogram=false
 {{< /highlight >}}
 
 ## Securing the geolocation API

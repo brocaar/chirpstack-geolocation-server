@@ -18,21 +18,21 @@ log_level={{ .General.LogLevel }}
 
 # Geolocation-server configuration.
 [geo_server]
-# Geolocation API.
-#
-# This is the geolocation API that can be used by LoRa Server.
-[geo_server.api]
-# ip:port to bind the api server
-bind="{{ .GeoServer.API.Bind }}"
+  # Geolocation API.
+  #
+  # This is the geolocation API that can be used by LoRa Server.
+  [geo_server.api]
+  # ip:port to bind the api server
+  bind="{{ .GeoServer.API.Bind }}"
 
-# CA certificate used by the api server (optional)
-ca_cert="{{ .GeoServer.API.CACert }}"
+  # CA certificate used by the api server (optional)
+  ca_cert="{{ .GeoServer.API.CACert }}"
 
-# TLS certificate used by the api server (optional)
-tls_cert="{{ .GeoServer.API.TLSCert }}"
+  # TLS certificate used by the api server (optional)
+  tls_cert="{{ .GeoServer.API.TLSCert }}"
 
-# TLS key used by the api server (optional)
-tls_key="{{ .GeoServer.API.TLSKey }}"
+  # TLS key used by the api server (optional)
+  tls_key="{{ .GeoServer.API.TLSKey }}"
 
 
   # Geolocation backend configuration.
@@ -48,7 +48,7 @@ tls_key="{{ .GeoServer.API.TLSKey }}"
   # different geolocation backends. When left blank, logging will be disabled.
   request_log_dir="{{ .GeoServer.Backend.RequestLogDir }}"
 
-	# Collos backend.
+    # Collos backend.
     [geo_server.backend.collos]
     # Collos subscription key.
     #
@@ -60,6 +60,22 @@ tls_key="{{ .GeoServer.API.TLSKey }}"
     #
     # This defines the request timeout when making calls to the Collos API.
     request_timeout="{{ .GeoServer.Backend.Collos.RequestTimeout }}"
+
+
+# Prometheus metrics settings.
+[metrics.prometheus]
+# Enable Prometheus metrics endpoint.
+endpoint_enabled={{ .Metrics.Prometheus.EndpointEnabled }}
+
+# The ip:port to bind the Prometheus metrics server to for serving the
+# metrics endpoint.
+bind="{{ .Metrics.Prometheus.Bind }}"
+
+# API timing histogram.
+#
+# By setting this to true, the API request timing histogram will be enabled.
+# See also: https://github.com/grpc-ecosystem/go-grpc-prometheus#histograms
+api_timing_histogram={{ .Metrics.Prometheus.APITimingHistogram }}
 `
 
 var configfileCmd = &cobra.Command{
