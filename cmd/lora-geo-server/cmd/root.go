@@ -37,6 +37,7 @@ func init() {
 	viper.SetDefault("geo_server.api.bind", "0.0.0.0:8005")
 	viper.SetDefault("geo_server.backend.type", "collos")
 	viper.SetDefault("geo_server.backend.collos.request_timeout", time.Second)
+	viper.SetDefault("geo_server.backend.lora_cloud.request_timeout", time.Second)
 
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(configfileCmd)

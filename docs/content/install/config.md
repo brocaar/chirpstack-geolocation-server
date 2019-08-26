@@ -135,7 +135,7 @@ log_level=4
     # Request timeout.
     #
     # This defines the request timeout when making calls to the LoRa Cloud API.
-    request_timeout="0s"
+    request_timeout="1s"
 
 
 # Prometheus metrics settings.

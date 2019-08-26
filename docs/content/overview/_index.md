@@ -18,3 +18,4 @@ provided by LoRa gateways.
 The following backends are supported by LoRa Geo Server:
 
 * [Semtech Collos]({{<ref "backends/semtech-collos.md">}})
+* [Semtech LoRa Cloud]({{<ref "backends/lora-cloud.md">}})
