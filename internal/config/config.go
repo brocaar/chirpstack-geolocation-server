@@ -28,6 +28,12 @@ type Config struct {
 				SubscriptionKey string        `mapstructure:"subscription_key"`
 				RequestTimeout  time.Duration `mapstructure:"request_timeout"`
 			} `mapstructure:"collos"`
+
+			LoRaCloud struct {
+				URI            string        `mapstructure:"uri"`
+				Token          string        `mapstructure:"token"`
+				RequestTimeout time.Duration `mapstructure:"request_timeout"`
+			} `mapstructure:"lora_cloud"`
 		} `mapstructure:"backend"`
 	} `mapstructure:"geo_server"`
 

@@ -62,6 +62,26 @@ log_level={{ .General.LogLevel }}
     request_timeout="{{ .GeoServer.Backend.Collos.RequestTimeout }}"
 
 
+    # LoRa Cloud backend.
+    #
+    # Please see https://www.loracloud.com/ for more information about this
+    # geolocation service.
+    [geo_server.backend.lora_cloud]
+    # API URI.
+    #
+    # The URI of the Geolocation API. This URI can be found under
+    # 'Token Management'.
+    uri="{{ .GeoServer.Backend.LoRaCloud.URI }}"
+
+    # API token.
+    token="{{ .GeoServer.Backend.LoRaCloud.Token }}"
+
+    # Request timeout.
+    #
+    # This defines the request timeout when making calls to the LoRa Cloud API.
+    request_timeout="{{ .GeoServer.Backend.LoRaCloud.RequestTimeout }}"
+
+
 # Prometheus metrics settings.
 [metrics.prometheus]
 # Enable Prometheus metrics endpoint.

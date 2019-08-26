@@ -23,10 +23,11 @@ Usage:
   lora-geo-server [command]
 
 Available Commands:
-  configfile        Print the LoRa Geolocation Server configuration file
-  help              Help about any command
-  test-resolve-tdoa Runs the given resolve TDOA test-suite file (json)
-  version           Print the LoRa Geo Server version
+  configfile                    Print the LoRa Geolocation Server configuration file
+  help                          Help about any command
+  test-resolve-multi-frame-tdoa Runs the resolve multi-frame TDOA request from the given directory
+  test-resolve-tdoa             Runs the resolve TDOA request from the given directory
+  version                       Print the LoRa Geo Server version
 
 Flags:
   -c, --config string   path to configuration file (optional)
@@ -115,6 +116,26 @@ log_level=4
     #
     # This defines the request timeout when making calls to the Collos API.
     request_timeout="1s"
+
+
+    # LoRa Cloud backend.
+    #
+    # Please see https://www.loracloud.com/ for more information about this
+    # geolocation service.
+    [geo_server.backend.lora_cloud]
+    # API URI.
+    #
+    # The URI of the Geolocation API. This URI can be found under
+    # 'Token Management'.
+    uri=""
+
+    # API token.
+    token=""
+
+    # Request timeout.
+    #
+    # This defines the request timeout when making calls to the LoRa Cloud API.
+    request_timeout="0s"
 
 
 # Prometheus metrics settings.

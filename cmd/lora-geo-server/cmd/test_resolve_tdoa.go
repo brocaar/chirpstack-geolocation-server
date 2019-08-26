@@ -16,21 +16,6 @@ var testResolveTDOA = &cobra.Command{
 			return errors.New("location to a file must be given as an argument")
 		}
 
-		/*
-
-			b, err := ioutil.ReadFile(args[0])
-			if err != nil {
-				return errors.Wrap(err, "read file error")
-			}
-
-			var ts test.ResolveTDOATestSuite
-			m := jsonpb.Unmarshaler{}
-			if err = m.Unmarshal(bytes.NewReader(b), &ts); err != nil {
-				return errors.Wrap(err, "unmarshal test file error")
-			}
-
-		*/
-
 		return test.ResolveTDOA(args[0])
 	},
 }

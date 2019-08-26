@@ -18,6 +18,7 @@ import (
 
 	"github.com/brocaar/lora-geo-server/internal/backend/collos"
 	"github.com/brocaar/lora-geo-server/internal/backend/logger"
+	"github.com/brocaar/lora-geo-server/internal/backend/loracloud"
 	"github.com/brocaar/lora-geo-server/internal/config"
 	"github.com/brocaar/loraserver/api/geo"
 )
@@ -29,6 +30,8 @@ func Setup(c config.Config) error {
 	switch c.GeoServer.Backend.Type {
 	case "collos":
 		b, err = collos.NewBackend(c)
+	case "lora_cloud":
+		b, err = loracloud.NewBackend(c)
 	default:
 		return fmt.Errorf("unknown backend: %s", c.GeoServer.Backend.Type)
 	}

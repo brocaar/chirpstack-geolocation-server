@@ -1,4 +1,4 @@
-package collos
+package loracloud
 
 import (
 	"bytes"
@@ -20,28 +20,30 @@ import (
 	"github.com/brocaar/lorawan"
 )
 
-// Backend implements the Collos geolocation backend.
+// Backend implements the LoRa Cloud geolocation backend.
 type Backend struct {
-	subscriptionKey string
-	requestTimeout  time.Duration
+	uri            string
+	token          string
+	requestTimeout time.Duration
 }
 
-// NewBackend creates a new Collos backend.
+// NewBackend creates a new LoRa Cloud backend.
 func NewBackend(c config.Config) (geo.GeolocationServerServiceServer, error) {
 	return &Backend{
-		subscriptionKey: c.GeoServer.Backend.Collos.SubscriptionKey,
-		requestTimeout:  c.GeoServer.Backend.Collos.RequestTimeout,
+		uri:            c.GeoServer.Backend.LoRaCloud.URI,
+		token:          c.GeoServer.Backend.LoRaCloud.Token,
+		requestTimeout: c.GeoServer.Backend.LoRaCloud.RequestTimeout,
 	}, nil
 }
 
 // ResolveTDOA resolves the location based on TDOA.
 func (b *Backend) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) (*geo.ResolveTDOAResponse, error) {
-	collosReq, err := resolveTDOARequestToCollosRequest(req)
+	lcReq, err := resolveTDOARequestToLoRaCloudRequest(req)
 	if err != nil {
 		return nil, grpc.Errorf(codes.InvalidArgument, err.Error())
 	}
 
-	tdoaResp, err := b.resolveTDOA(ctx, collosReq)
+	tdoaResp, err := b.resolveTDOA(ctx, lcReq)
 	if err != nil {
 		return nil, grpc.Errorf(codes.Unknown, "geolocation error: %s", err)
 	}
@@ -53,14 +55,14 @@ func (b *Backend) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) 
 		log.WithFields(log.Fields{
 			"dev_eui":  devEUI,
 			"warnings": tdoaResp.Warnings,
-		}).Warning("backend/collos: backend returned warnings")
+		}).Warning("backend/lora_cloud: backend returned warnings")
 	}
 
 	if len(tdoaResp.Errors) != 0 {
 		log.WithFields(log.Fields{
 			"dev_eui": devEUI,
 			"errors":  tdoaResp.Errors,
-		}).Error("backend/collos: backend returned errors")
+		}).Error("backend/lora_cloud: backend returned errors")
 
 		return nil, grpc.Errorf(codes.Internal, "backend returned errors: %v", tdoaResp.Errors)
 	}
@@ -81,12 +83,12 @@ func (b *Backend) ResolveTDOA(ctx context.Context, req *geo.ResolveTDOARequest) 
 // ResolveMultiFrameTDOA resolves the location using TDOA, based on
 // multiple frames.
 func (b *Backend) ResolveMultiFrameTDOA(ctx context.Context, req *geo.ResolveMultiFrameTDOARequest) (*geo.ResolveMultiFrameTDOAResponse, error) {
-	collosReq, err := resolveMutiFrameTDOARequestToCollosRequest(req)
+	lcReq, err := resolveMutiFrameTDOARequestToLoRaCloudRequest(req)
 	if err != nil {
 		return nil, grpc.Errorf(codes.InvalidArgument, err.Error())
 	}
 
-	tdoaResp, err := b.resolveTDOAMultiFrame(ctx, collosReq)
+	tdoaResp, err := b.resolveTDOAMultiFrame(ctx, lcReq)
 	if err != nil {
 		return nil, grpc.Errorf(codes.Unknown, "geolocation error: %s", err)
 	}
@@ -98,14 +100,14 @@ func (b *Backend) ResolveMultiFrameTDOA(ctx context.Context, req *geo.ResolveMul
 		log.WithFields(log.Fields{
 			"dev_eui":  devEUI,
 			"warnings": tdoaResp.Warnings,
-		}).Warning("backend/collos: backend returned warnings")
+		}).Warning("backend/lora_cloud: backend returned warnings")
 	}
 
 	if len(tdoaResp.Errors) != 0 {
 		log.WithFields(log.Fields{
 			"dev_eui": devEUI,
 			"errors":  tdoaResp.Errors,
-		}).Error("backend/collos: backend returned errors")
+		}).Error("backend/lora_cloud: backend returned errors")
 
 		return nil, grpc.Errorf(codes.Internal, "backend returned errors: %v", tdoaResp.Errors)
 	}
@@ -124,22 +126,23 @@ func (b *Backend) ResolveMultiFrameTDOA(ctx context.Context, req *geo.ResolveMul
 }
 
 func (b *Backend) resolveTDOA(ctx context.Context, tdoaReq tdoaRequest) (response, error) {
-	d := collosAPIDuration("v2_tdoa")
+	d := loRaCloudAPIDuration("v2_tdoa")
 	start := time.Now()
-	resp, err := b.collosAPIRequest(ctx, tdoaEndpoint, tdoaReq)
+	resp, err := b.loRaCloudAPIRequest(ctx, tdoaEndpoint, tdoaReq)
 	d.Observe(float64(time.Since(start)) / float64(time.Second))
 	return resp, err
 }
 
 func (b *Backend) resolveTDOAMultiFrame(ctx context.Context, tdoaMultiFrameReq tdoaMultiFrameRequest) (response, error) {
-	d := collosAPIDuration("v2_tdoa_multiframe")
+	d := loRaCloudAPIDuration("v2_tdoa_multiframe")
 	start := time.Now()
-	resp, err := b.collosAPIRequest(ctx, tdoaMultiFrameEndpoint, tdoaMultiFrameReq)
+	resp, err := b.loRaCloudAPIRequest(ctx, tdoaMultiFrameEndpoint, tdoaMultiFrameReq)
 	d.Observe(float64(time.Since(start)) / float64(time.Second))
 	return resp, err
 }
 
-func (b *Backend) collosAPIRequest(ctx context.Context, endpoint string, v interface{}) (response, error) {
+func (b *Backend) loRaCloudAPIRequest(ctx context.Context, endpoint string, v interface{}) (response, error) {
+	endpoint = fmt.Sprintf(endpoint, b.uri)
 	var resolveResp response
 
 	bb, err := json.Marshal(v)
@@ -153,7 +156,7 @@ func (b *Backend) collosAPIRequest(ctx context.Context, endpoint string, v inter
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Ocp-Apim-Subscription-Key", b.subscriptionKey)
+	req.Header.Set("Ocp-Apim-Subscription-Key", b.token)
 
 	reqCTX, cancel := context.WithTimeout(ctx, b.requestTimeout)
 	defer cancel()
