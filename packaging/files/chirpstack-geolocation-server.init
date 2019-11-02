@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ### BEGIN INIT INFO
-# Provides:          lora-geo-server
+# Provides:          chirpstack-geolocation-server
 # Required-Start:    $all
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -9,8 +9,8 @@
 ### END INIT INFO
 
 
-NAME=lora-geo-server
-DESC="LoRa Geo Server"
+NAME=chirpstack-geolocation-server
+DESC="ChirpStack Geolocation Server"
 DAEMON_USER=geoserver
 DAEMON_GROUP=geoserver
 DAEMON=/usr/bin/$NAME

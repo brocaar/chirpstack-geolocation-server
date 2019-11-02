@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"github.com/brocaar/lora-geo-server/internal/config"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
 )
 
 const configTemplate = `[general]
@@ -20,7 +20,7 @@ log_level={{ .General.LogLevel }}
 [geo_server]
   # Geolocation API.
   #
-  # This is the geolocation API that can be used by LoRa Server.
+  # This is the geolocation API that can be used by ChirpStack Network Server.
   [geo_server.api]
   # ip:port to bind the api server
   bind="{{ .GeoServer.API.Bind }}"

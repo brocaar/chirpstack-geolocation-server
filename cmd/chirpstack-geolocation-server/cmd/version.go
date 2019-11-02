@@ -8,7 +8,7 @@ import (
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the LoRa Geo Server version",
+	Short: "Print the ChirpStack Geolocation Server version",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(version)
 	},

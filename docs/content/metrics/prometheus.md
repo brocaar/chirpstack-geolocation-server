@@ -9,8 +9,8 @@ description: Read metrics from the Prometheus metrics endpoint.
 
 # Prometheus metrics
 
-LoRa Geo Server provides a [Prometheus](https://prometheus.io/) metrics endpoint
-for monitoring the performance of the LoRa Geo Server service. Please refer to
+ChirpStack Geolocation Server provides a [Prometheus](https://prometheus.io/) metrics endpoint
+for monitoring the performance of the ChirpStack Geolocation Server service. Please refer to
 the [Prometheus](https://prometheus.io/) website for more information on
 setting up and using Prometheus.
 
@@ -32,7 +32,7 @@ the process like:
 ### gRPC API metrics
 
 These metrics are prefixed with `grpc_` and provide metrics about the gRPC
-API (used by [LoRa Server](/loraserver/)), e.g.:
+API (used by [ChirpStack Network Server](/network-server/)), e.g.:
 
 * The number of times each API was called
 * The duration of each API call (if enabled in the [Configuration]({{<ref "install/config.md">}}))

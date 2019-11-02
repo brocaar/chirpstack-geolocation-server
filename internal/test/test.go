@@ -14,9 +14,9 @@ import (
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/brocaar/lora-geo-server/internal/backend/collos"
-	"github.com/brocaar/lora-geo-server/internal/backend/loracloud"
-	"github.com/brocaar/lora-geo-server/internal/config"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/collos"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/loracloud"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
 	geo "github.com/brocaar/loraserver/api/geo"
 )
 

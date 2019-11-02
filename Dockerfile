@@ -1,6 +1,6 @@
 FROM golang:1.12-alpine AS development
 
-ENV PROJECT_PATH=/lora-geo-server
+ENV PROJECT_PATH=/chirpstack-geolocation-server
 ENV PATH=$PATH:$PROJECT_PATH/build
 ENV CGO_ENABLED=0
 ENV GO_EXTRA_BUILD_ARGS="-a -installsuffix cgo"
@@ -18,5 +18,5 @@ FROM alpine:latest AS production
 
 WORKDIR /root/
 RUN apk --no-cache add ca-certificates tzdata
-COPY --from=development /lora-geo-server/build/lora-geo-server .
-ENTRYPOINT ["./lora-geo-server"]
+COPY --from=development /chirpstack-geolocation-server/build/chirpstack-geolocation-server .
+ENTRYPOINT ["./chirpstack-geolocation-server"]

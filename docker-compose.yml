@@ -1,8 +1,8 @@
 version: "3"
 services:
-  geoserver:
+  chirpstack-geolocation-server:
     build:
       context: .
       dockerfile: Dockerfile-devel
     volumes:
-      - ./:/lora-geo-server
+      - ./:/chirpstack-geolocation-server

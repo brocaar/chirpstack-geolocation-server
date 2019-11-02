@@ -1,8 +1,9 @@
-baseURL = "https://www.loraserver.io/lora-geo-server/"
+baseURL = "https://www.chirpstack.io/geolocation-server/"
 languageCode = "en-us"
-title = "LoRa Geo Server documentation"
+title = "ChirpStack Geolocation Server documentation"
 googleAnalytics = "UA-3512995-9"
 pygmentsUseClasses = true
+theme = "chirpstack-hugo-theme"
 
 [[menu.main]]
     pre = "<i class='fas fa-hand-point-right'></i>"
@@ -40,4 +41,5 @@ pygmentsUseClasses = true
     weight = 5
 
 [params]
-    version = "3.2.0"
+    version = "3.3.0"
+	component = "chirpstack-geolocation-server"

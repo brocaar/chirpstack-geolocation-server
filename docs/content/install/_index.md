@@ -2,4 +2,4 @@
 title: Install
 ---
 
-# Install LoRa Geo Server
+# Install ChirpStack Geolocation Server

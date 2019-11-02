@@ -1,14 +1,15 @@
 [Unit]
-Description=LoRa Geo Server
-Documentation=https://www.loraserver.io/
+Description=ChirpStack Geolocation Server
+Documentation=https://www.chirpstack.io/
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 User=geoserver
 Group=geoserver
-ExecStart=/usr/bin/lora-geo-server
+ExecStart=/usr/bin/chirpstack-geolocation-server
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+Alias=lora-geo-server.service

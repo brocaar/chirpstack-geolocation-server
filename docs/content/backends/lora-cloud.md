@@ -7,7 +7,7 @@ menu:
 description: LoRa Cloud Geolocation service by Semtech.
 ---
 
-# LoRa Cloud Geolocation
+# LoRa Cloud<sup>&trade;</sup> Geolocation
 
 [LoRa Cloud](https://www.loracloud.com/) is a service provided by [Semtech](https://www.semtech.com/)
 which provides a geolocation API as a service. Please refer to the LoRa Cloud
@@ -15,7 +15,7 @@ website for more information, pricing and for signing up.
 
 ## Implementation
 
-LoRa Geo Server integrates with the LoRa Cloud Geolocation v2 TDoA localization
+ChirpStack Geolocation Server integrates with the LoRa Cloud Geolocation v2 TDoA localization
 algorithm. Both single-frame and multi-frame TDOA are implemented.
 
 ## Metrics

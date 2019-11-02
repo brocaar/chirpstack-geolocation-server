@@ -4,7 +4,7 @@ VERSION := $(shell git describe --always |sed -e "s/^v//")
 build:
 	@echo "Compiling source"
 	mkdir -p build
-	go build $(GO_EXTRA_BUILD_ARGS) -ldflags "-s -w -X main.version=$(VERSION)" -o build/lora-geo-server cmd/lora-geo-server/main.go
+	go build $(GO_EXTRA_BUILD_ARGS) -ldflags "-s -w -X main.version=$(VERSION)" -o build/chirpstack-geolocation-server cmd/chirpstack-geolocation-server/main.go
 
 api:
 	@echo "Generating API code from .proto files"
@@ -44,4 +44,4 @@ dev-requirements:
 
 docker-test:
 	@echo "Running tests inside docker container"
-	docker-compose run --rm geoserver test
+	docker-compose run --rm geolocationserver test

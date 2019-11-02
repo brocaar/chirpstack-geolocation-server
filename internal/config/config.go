@@ -2,7 +2,7 @@ package config
 
 import "time"
 
-// Version defines the LoRa Geo Server version.
+// Version defines the ChirpStack Geolocation Server version.
 var Version string
 
 // Config defines the configuration structure.

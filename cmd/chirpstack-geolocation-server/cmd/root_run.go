@@ -9,9 +9,9 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/brocaar/lora-geo-server/internal/backend"
-	"github.com/brocaar/lora-geo-server/internal/config"
-	"github.com/brocaar/lora-geo-server/internal/metrics"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/backend"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
+	"github.com/brocaar/chirpstack-geolocation-server/internal/metrics"
 )
 
 func run(cmd *cobra.Command, args []string) error {
@@ -43,8 +43,8 @@ func setLogLevel() error {
 func printStartMessage() error {
 	log.WithFields(log.Fields{
 		"version": version,
-		"docs":    "https://www.loraserver.io/lora-geo-server/",
-	}).Info("starting LoRa Geo Server")
+		"docs":    "https://www.chirpstack.io/geolocation-server/",
+	}).Info("starting ChirpStack Geolocation Server")
 	return nil
 }
 

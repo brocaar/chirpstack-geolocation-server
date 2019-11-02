@@ -5,53 +5,53 @@ menu:
         parent: install
         weight: 3
 toc: false
-description: Instructions and examples how to configure the LoRa Geo Server service.
+description: Instructions and examples how to configure the ChirpStack Geolocation Server service.
 ---
 
 # Configuration
 
-To list all configuration options, start `lora-geo-server` with the `--help`
+To list all configuration options, start `chirpstack-geolocation-server` with the `--help`
 flag. This will display:
 
 {{<highlight text>}}
-LoRa Geo Server provides geolocation services for LoRa Server
-        > documentation & support: https://www.loraserver.io/lora-geo-server/
-        > source & copyright information: https://github.com/brocaar/lora-geo-server/
+ChirpStack Geolocation Server provides geolocation services for ChirpStack Network Server
+        > documentation & support: https://www.chirpstack.io/geolocation-server/
+        > source & copyright information: https://github.com/brocaar/chirpstack-geolocation-server/
 
 Usage:
-  lora-geo-server [flags]
-  lora-geo-server [command]
+  chirpstack-geolocation-server [flags]
+  chirpstack-geolocation-server [command]
 
 Available Commands:
-  configfile                    Print the LoRa Geolocation Server configuration file
+  configfile                    Print the ChirpStack Geolocation Server configuration file
   help                          Help about any command
   test-resolve-multi-frame-tdoa Runs the resolve multi-frame TDOA request from the given directory
   test-resolve-tdoa             Runs the resolve TDOA request from the given directory
-  version                       Print the LoRa Geo Server version
+  version                       Print the ChirpStack Geolocation Server version
 
 Flags:
   -c, --config string   path to configuration file (optional)
-  -h, --help            help for lora-geo-server
+  -h, --help            help for chirpstack-geolocation-server
       --log-level int   debug=5, info=4, error=2, fatal=1, panic=0 (default 4)
 
-Use "lora-geo-server [command] --help" for more information about a command.
+Use "chirpstack-geolocation-server [command] --help" for more information about a command.
 {{< /highlight >}}
 
 ## Configuration file
 
-By default `lora-geo-server` will look in the following order for a
+By default `chirpstack-geolocation-server` will look in the following order for a
 configuration file at the following paths when `--config` is not set:
 
-* `lora-geo-server.toml` (current working directory)
-* `$HOME/.config/lora-geo-server/lora-geo-server.toml`
-* `/etc/lora-geo-server/lora-geo-server.toml`
+* `chirpstack-geolocation-server.toml` (current working directory)
+* `$HOME/.config/chirpstack-geolocation-server/chirpstack-geolocation-server.toml`
+* `/etc/chirpstack-geolocation-server/chirpstack-geolocation-server.toml`
 
 To load configuration from a different location, use the `--config` flag.
 
-To generate a new configuration file `lora-geo-server.toml`, execute the following command:
+To generate a new configuration file `chirpstack-geolocation-server.toml`, execute the following command:
 
 {{<highlight bash>}}
-lora-geo-server configfile > lora-geo-server.toml
+chirpstack-geolocation-server configfile > chirpstack-geolocation-server.toml
 {{< /highlight >}}
 
 Note that this configuration file will be pre-filled with the current configuration
@@ -60,7 +60,7 @@ This makes it possible when new fields get added to upgrade your configuration f
 while preserving your old configuration. Example:
 
 {{<highlight bash>}}
-lora-geo-server configfile --config lora-geo-server-old.toml > lora-geo-server-new.toml
+chirpstack-geolocation-server configfile --config chirpstack-geolocation-server-old.toml > chirpstack-geolocation-server-new.toml
 {{< /highlight >}}
 
 Example configuration file:
@@ -76,7 +76,7 @@ log_level=4
 [geo_server]
   # Geolocation API.
   #
-  # This is the geolocation API that can be used by LoRa Server.
+  # This is the geolocation API that can be used by ChirpStack Network Server.
   [geo_server.api]
   # ip:port to bind the api server
   bind="0.0.0.0:8005"
@@ -160,9 +160,9 @@ In order to protect the geolocation API (`geo_server.api`) against
 unauthorized access and to encrypt all communication, it is advised to use
 TLS certificates. Once the `ca_cert`, `tls_cert` and `tls_key` are set,
 the API will enforce client certificate validation on all incoming connections.
-This means that when configuring this geolocation-server instance in LoRa Server,
+This means that when configuring this geolocation-server instance in ChirpStack Network Server,
 you must provide the CA and TLS client certificate. See also
-[LoRa Server configuration](/loraserver/install/config/).
+[ChirpStack Network Server configuration](/network-server/install/config/).
 
-See [https://github.com/brocaar/loraserver-certificates](https://github.com/brocaar/loraserver-certificates)
+See [https://github.com/brocaar/chirpstack-certificates](https://github.com/brocaar/chirpstack-certificates)
 for a set of scripts to generate such certificates.

@@ -4,14 +4,14 @@ menu:
     main:
         parent: install
         weight: 1
-description: Instructions how to setup the LoRa Geo Server requirements.
+description: Instructions how to setup the ChirpStack Geolocation Server requirements.
 ---
 
 # Requirement
 
 ## Gateway
 
-When using geolocation, you need a gateway which provides geolocation
+When using geolocation, you need a LoRa<sup>&reg;</sup> gateway which provides geolocation
 capabilities. These gateways provide accurate timestamps, which is a
 requirement when doing geolocation based on time-difference of arrival.
 
@@ -30,6 +30,7 @@ you must therefore request a decryption key. Contact your gateway vendor
 or Semtech for more information.
 
 One you have this decryption key, you must set this in the gateway configuration
-so that LoRa Server will decrypt this before sending to LoRa Geo Server.
-Please refer to [LoRa App Server Gateway Management](/use/gateways/) for
+so that ChirpStack Network Server is able to decrypt the timestamp before sending it
+to ChirpStack Geolocation Server.
+Please refer to [ChirpStack Application Server Gateway Management](/application-server/use/gateways/) for
 more information.

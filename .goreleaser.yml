@@ -1,8 +1,8 @@
-project_name: lora-geo-server
+project_name: chirpstack-geolocation-server
 
 builds:
-  - main: cmd/lora-geo-server/main.go
-    binary: lora-geo-server
+  - main: cmd/chirpstack-geolocation-server/main.go
+    binary: chirpstack-geolocation-server
     goos:
       - windows
       - darwin
@@ -24,18 +24,19 @@ release:
   disable: true
 
 nfpm:
-  vendor: LoRa Server project
-  homepage: https://www.loraserver.io/
+  vendor: ChirpStack
+  homepage: https://www.chirpstack.io/
   maintainer: Orne Brocaar <info@brocaar.com>
-  description: Geolocation Server for the LoRa Server project
+  description: ChirpStack Geolocation Server
   license: MIT
   formats:
     - deb
   bindir: /usr/bin
   files:
-    "packaging/files/lora-geo-server.rotate": "/etc/logrotate.d/lora-geo-server"
-    "packaging/files/lora-geo-server.init": "/usr/lib/lora-geo-server/scripts/lora-geo-server.init"
-    "packaging/files/lora-geo-server.service": "/usr/lib/lora-geo-server/scripts/lora-geo-server.service"
+    "packaging/files/chirpstack-geolocation-server.rotate": "/etc/logrotate.d/chirpstack-geolocation-server"
+    "packaging/files/chirpstack-geolocation-server.init": "/usr/lib/chirpstack-geolocation-server/scripts/chirpstack-geolocation-server.init"
+    "packaging/files/chirpstack-geolocation-server.service": "/usr/lib/chirpstack-geolocation-server/scripts/chirpstack-geolocation-server.service"
   scripts:
+    preinstall: "packaging/scripts/pre-install.sh"
     postinstall: "packaging/scripts/post-install.sh"
     postremove: "packaging/scripts/post-remove.sh"

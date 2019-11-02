@@ -1,4 +1,4 @@
-module github.com/brocaar/lora-geo-server
+module github.com/brocaar/chirpstack-geolocation-server
 
 require (
 	github.com/brocaar/loraserver v0.0.0-20190813132339-df9c6685a8f6
@@ -17,3 +17,5 @@ require (
 	golang.org/x/tools v0.0.0-20190708203411-c8855242db9c
 	google.golang.org/grpc v1.20.1
 )
+
+go 1.13

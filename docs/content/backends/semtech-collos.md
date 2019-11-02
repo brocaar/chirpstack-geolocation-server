@@ -16,7 +16,7 @@ for more information and for signing up.
 
 ## Implementation
 
-LoRa Geo Server integrates with the Collos v2 TDoA localization algorithm. Both
+ChirpStack Geolocation Server integrates with the Collos v2 TDoA localization algorithm. Both
 single-frame and multi-frame TDOA are implemented.
 
 ## Metrics
@@ -30,4 +30,3 @@ The Collos backend exposes the following metrics:
 A [Histogram](https://prometheus.io/docs/concepts/metric_types/#histogram) type
 metrics tracking the total number of API calls to the Collos API endpoint and
 their durations (using buckets).
-
