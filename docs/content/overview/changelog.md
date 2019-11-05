@@ -10,6 +10,12 @@ description: Lists the changes per ChirpStack Geolocation Server release, includ
 
 # Changelog
 
+## v3.3.1
+
+### Bugfixes
+
+* Fixes init stop script which could cause the ChirpStack Geolocation Server to not properly stop or restart.
+
 ## v3.3.0
 
 This release renames LoRa Geo Server to ChirpStack Geolocation Server.
