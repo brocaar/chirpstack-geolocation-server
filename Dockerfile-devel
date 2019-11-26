@@ -12,7 +12,8 @@ RUN apk add --no-cache \
     make \
     git \
     bash \
-    protobuf
+    protobuf \
+	rpm
 
 RUN mkdir -p $PROJECT_PATH
 COPY . $PROJECT_PATH
