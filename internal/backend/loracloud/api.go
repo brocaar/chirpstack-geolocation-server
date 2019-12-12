@@ -15,8 +15,8 @@ import (
 	"google.golang.org/grpc/codes"
 
 	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
-	"github.com/brocaar/loraserver/api/common"
-	"github.com/brocaar/loraserver/api/geo"
+	"github.com/brocaar/chirpstack-api/go/v3/common"
+	"github.com/brocaar/chirpstack-api/go/v3/geo"
 	"github.com/brocaar/lorawan"
 )
 

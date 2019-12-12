@@ -20,7 +20,7 @@ import (
 	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/logger"
 	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/loracloud"
 	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
-	"github.com/brocaar/loraserver/api/geo"
+	"github.com/brocaar/chirpstack-api/go/v3/geo"
 )
 
 func Setup(c config.Config) error {

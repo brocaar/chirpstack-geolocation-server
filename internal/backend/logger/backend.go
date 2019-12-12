@@ -14,7 +14,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
-	"github.com/brocaar/loraserver/api/geo"
+	"github.com/brocaar/chirpstack-api/go/v3/geo"
 )
 
 // Backend implements a logging backend.

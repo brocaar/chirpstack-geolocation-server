@@ -17,7 +17,7 @@ import (
 	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/collos"
 	"github.com/brocaar/chirpstack-geolocation-server/internal/backend/loracloud"
 	"github.com/brocaar/chirpstack-geolocation-server/internal/config"
-	geo "github.com/brocaar/loraserver/api/geo"
+	geo "github.com/brocaar/chirpstack-api/go/v3/geo"
 )
 
 // ResolveTDOA runs the given Resolve TDOA test-suite.
