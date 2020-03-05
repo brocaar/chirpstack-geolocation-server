@@ -9,11 +9,11 @@ var Version string
 type Config struct {
 	General struct {
 		LogLevel int `mapstructure:"log_level"`
-	}
+	} `mapstructure:"general"`
 
 	GeoServer struct {
 		API struct {
-			Bind    string
+			Bind    string `mapstructure:"bind"`
 			CACert  string `mapstructure:"ca_cert"`
 			TLSCert string `mapstructure:"tls_cert"`
 			TLSKey  string `mapstructure:"tls_key"`
