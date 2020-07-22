@@ -7,7 +7,7 @@ devices. It is part of the [ChirpStack](https://www.chirpstack.io/) open-source 
 
 ## Architecture
 
-![architecture](https://www.chirpstack.io/img/graphs/architecture.png)
+![architecture](https://www.chirpstack.io/static/img/graphs/architecture.dot.png)
 
 ### Component links
 

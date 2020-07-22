@@ -22,7 +22,6 @@ clean:
 	@echo "Cleaning up workspace"
 	rm -rf build
 	rm -rf dist
-	rm -rf docs/public
 
 dist:
 	goreleaser
